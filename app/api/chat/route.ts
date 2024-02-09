@@ -25,7 +25,6 @@ const convertMessageContent = (
   ];
 };
 
-export const maxDuration = 50;
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
