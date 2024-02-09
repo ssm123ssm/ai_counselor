@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 const convertMessageContent = (
   textMessage: string,
-  imageUrl: string | undefined,
+  imageUrl: string | undefined
 ): MessageContent => {
   if (!imageUrl) return textMessage;
   return [
@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { messages, data }: { messages: ChatMessage[]; data: any } = body;
+    console.log("[LlamaIndex] Request Body", body);
     const userMessage = messages.pop();
     if (!messages || !userMessage || userMessage.role !== "user") {
       return NextResponse.json(
@@ -37,13 +38,13 @@ export async function POST(request: NextRequest) {
           error:
             "messages are required in the request body and the last message must be from the user",
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const llm = new OpenAI({
       model: (process.env.MODEL as any) ?? "gpt-3.5-turbo",
-      maxTokens: 512,
+      maxTokens: 4096,
     });
 
     const chatEngine = await createChatEngine(llm);
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
     // Convert message content from Vercel/AI format to LlamaIndex/OpenAI format
     const userMessageContent = convertMessageContent(
       userMessage.content,
-      data?.imageUrl,
+      data?.imageUrl
     );
 
     // Calling LlamaIndex's ChatEngine to get a streamed response
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest) {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
