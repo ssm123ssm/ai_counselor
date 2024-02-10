@@ -7,7 +7,7 @@ export interface ChatInputProps {
   handleInputChange?: (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+      | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
   /** Form submission handler to automatically reset input and append a user message  */
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -20,7 +20,7 @@ export default function ChatInput(props: ChatInputProps) {
     <>
       <form
         onSubmit={props.handleSubmit}
-        className="flex items-start justify-between w-full max-w-5xl p-4 bg-white rounded-xl shadow-xl gap-4"
+        className="flex items-start justify-between w-full max-w-5xl p-2 bg-white rounded-xl shadow-xl gap-4"
       >
         <input
           autoFocus
@@ -35,7 +35,7 @@ export default function ChatInput(props: ChatInputProps) {
           type="submit"
           className="p-4 text-white rounded-xl shadow-xl bg-gradient-to-r from-cyan-500 to-sky-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Send message
+          Send
         </button>
       </form>
     </>

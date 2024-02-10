@@ -148,7 +148,7 @@ activities can help cope better with the demands of tertiary education.
   }, [messages, data]);
 
   return (
-    <div className="space-y-4 max-w-5xl w-full">
+    <div className="space-y-4 max-w-5xl w-full mt-[30px] mb-[80px]">
       <ChatMessages
         messages={transformedMessages.slice(5)}
         isLoading={isLoading}
