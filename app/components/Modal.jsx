@@ -31,7 +31,7 @@ const Md = () => {
                 <p>
                   Please note this software provides counselling services using
                   generative AI technology. While we aim to offer helpful
-                  support, it's essential to understand that this is not a
+                  support, it is essential to understand that this is not a
                   replacement for professional medical or psychological advice.
                 </p>
                 <p>
