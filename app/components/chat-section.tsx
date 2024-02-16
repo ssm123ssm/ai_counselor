@@ -5,6 +5,8 @@ import { useMemo } from "react";
 import { insertDataIntoMessages } from "./transform";
 import { ChatInput, ChatMessages } from "./ui/chat";
 import { useState } from "react";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 export default function ChatSection() {
   const [chatInitiated, setChatInitiated] = useState(false);
@@ -147,8 +149,26 @@ activities can help cope better with the demands of tertiary education.
     return insertDataIntoMessages(messages, data);
   }, [messages, data]);
 
+  const router = useRouter();
+
+  const handleFinish = async () => {
+    console.log("Chat finished");
+
+    //send the messages to api/finish endpoint
+    const res = await fetch("/api/finish", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ messages: transformedMessages }),
+    });
+
+    window.open("https://forms.office.com/r/SBJwgK3t8e", "_ blank");
+    location.reload();
+  };
+
   return (
-    <div className="space-y-4 max-w-5xl w-full mt-[30px] mb-[80px]">
+    <div className="space-y-4 max-w-5xl w-full mt-[30px] mb-[80px] flex items-center flex-col">
       <ChatMessages
         messages={transformedMessages.slice(5)}
         isLoading={isLoading}
@@ -162,6 +182,13 @@ activities can help cope better with the demands of tertiary education.
         isLoading={isLoading}
         multiModal={process.env.NEXT_PUBLIC_MODEL === "gpt-4-vision-preview"}
       />
+      <Button
+        size="lg"
+        className="w-[30px] bg-gradient-to-r from-sky-500 to-sky-700 text-white"
+        onClick={handleFinish}
+      >
+        Finish
+      </Button>
     </div>
   );
 }
