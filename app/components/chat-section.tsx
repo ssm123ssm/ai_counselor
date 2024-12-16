@@ -168,7 +168,7 @@ activities can help cope better with the demands of tertiary education.
   };
 
   return (
-    <div className="space-y-4 max-w-5xl w-full mt-[30px] mb-[80px] flex items-center flex-col">
+    <div className="space-y-4 max-w-5xl w-full mt-[30px] mb-[120px] flex items-center flex-col">
       <ChatMessages
         messages={transformedMessages.slice(5)}
         isLoading={isLoading}
@@ -184,7 +184,7 @@ activities can help cope better with the demands of tertiary education.
       />
       <Button
         size="lg"
-        className="w-[30px] bg-gradient-to-r from-sky-500 to-sky-700 text-white"
+        className="w-[30px] bg-gradient-to-r from-sky-500 to-sky-700 text-white mb-5"
         onClick={handleFinish}
       >
         Finish

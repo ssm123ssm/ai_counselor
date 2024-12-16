@@ -42,11 +42,12 @@ export async function POST(request: NextRequest) {
     }
 
     const llm = new OpenAI({
-      model: (process.env.MODEL as any) ?? "gpt-3.5-turbo",
+      model: (process.env.MODEL as any) ?? "gpt-4o",
       maxTokens: 4096,
     });
 
     const chatEngine = await createChatEngine(llm);
+    console.log(llm);
 
     // Convert message content from Vercel/AI format to LlamaIndex/OpenAI format
     const userMessageContent = convertMessageContent(

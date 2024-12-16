@@ -35,10 +35,9 @@ const Md = () => {
                   replacement for professional medical or psychological advice.
                 </p>
                 <p>
-                  Users are encouraged to seek appropriate professional
-                  assistance for serious or urgent matters. Additionally, all
-                  interactions within the app are treated with confidentiality,
-                  and user privacy is prioritized.
+                  Data collected during the use of this software may be used for
+                  research purposes. This data will be anonymized and will not
+                  be shared with third parties.
                 </p>
                 <p>
                   By using this software, you acknowledge and agree to these
