@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import fsPromises from "fs/promises";
-import path from "path";
+import sendgrid from "@sendgrid/mail";
+
+sendgrid.setApiKey(process.env.SGKEY); // Store your API key securely
 
 export async function POST(request) {
   try {
@@ -8,15 +9,43 @@ export async function POST(request) {
     const body = await request.json();
     const content = body.messages.splice(5);
 
-    // create a unique file name
-    const fileName = `app/responses/file-${Date.now()}.json`;
+    // Format the content into a plain text file format
+    const fileContent = content
+      .map(
+        (message, index) =>
+          `Message ${index + 1}:\n${JSON.stringify(message, null, 2)}`
+      )
+      .join("\n\n");
 
-    //write content to a json file
-    await fsPromises.writeFile(fileName, JSON.stringify(content));
+    const fileName = `file-${Date.now()}.txt`;
 
-    return NextResponse.json({ message: "Success" });
+    const message = {
+      to: "pharm.saq@gmail.com", // Replace with the target email
+      from: "pharm.saq@gmail.com", // Verified email in SendGrid
+      subject: `New Feedback Submission File: ${fileName}`,
+      text: `Please find the attached file: ${fileName}`,
+      attachments: [
+        {
+          content: Buffer.from(fileContent).toString("base64"), // File content encoded in Base64
+          filename: fileName,
+          type: "text/plain", // MIME type for a plain text file
+          disposition: "attachment",
+        },
+      ],
+    };
+
+    await sendgrid
+      .send(message)
+      .then(() => {
+        console.log("Email sent");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    return NextResponse.json({ message: "Email sent successfully" });
   } catch (error) {
-    console.log("error");
-    return NextResponse.error(error);
+    console.error("Error sending email:", error);
+    return NextResponse.error(error.message);
   }
 }
