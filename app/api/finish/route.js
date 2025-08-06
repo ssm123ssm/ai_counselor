@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import sendgrid from "@sendgrid/mail";
 
-sendgrid.setApiKey(process.env.SGKEY); // Store your API key securely
+sendgrid.setApiKey(process.env.SGKEY);
 
 export async function POST(request) {
   try {
@@ -9,7 +9,6 @@ export async function POST(request) {
     const body = await request.json();
     const content = body.messages.splice(5);
 
-    // Format the content into a plain text file format
     const fileContent = content
       .map(
         (message, index) =>
@@ -20,8 +19,8 @@ export async function POST(request) {
     const fileName = `file-${Date.now()}.txt`;
 
     const message = {
-      to: "pharm.saq@gmail.com", // Replace with the target email
-      from: "pharm.saq@gmail.com", // Verified email in SendGrid
+      to: "pharm.saq@gmail.com",
+      from: "pharm.saq@gmail.com",
       subject: `New Feedback Submission File: ${fileName}`,
       text: `Please find the attached file: ${fileName}`,
       attachments: [
